@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout2 :: head">
+</head>
+<body>
+	<!-- Top menu -->
+	<nav th:replace="layout2 :: header"></nav>
+	<div style="background-color: #EEEEEE;" ><img width="900px" th:src="@{../img/bg.gif}"/></div>
+	<ul class="pagination">
+		<li><a th:href="@{/ptban}">Bàn</a></li>
+		<li><a th:href="@{/ptghe}">Ghế</a></li>
+		<li><a th:href="@{/ptgiuong}">Giường</a></li>
+	</ul>
+	<div th:each="sanpham,iterStat:${sanphams}">
+		<div>
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<img width="300px" th:src="@{${sanpham.hinh}}" />
+					<div class="caption">
+						<h3 th:text="${sanpham.name}"></h3>
+						<h3 class="red-text" th:text="${sanpham.gia}+' vnđ'"></h3>
+						<form th:action="@{/giohang/save}" th:object="${giohang}"
+							method="POST">
+							<input type="hidden" th:field="*{id}" /> <input type="hidden"
+								id="tam" th:value="${sanpham.id}" /> <input type="hidden"
+								id="idsanpham" th:field="*{idsanpham}" />
+							<p>
+								<a class="btn btn-primary" data-toggle="modal"
+									th:attr="data-target='#'+${sanpham.id}">Augmented Reality</a>
+								<!--id Model tương ứng với id sản phẩm -->
+								<a class="btn btn-primary" data-toggle="modal"
+									th:attr="data-target='#'+'hinh'+${sanpham.id}">Xem Chi Tiêt</a>
+								<button onmouseenter="idsanpham.value = tam.value;" id="mua"
+									type="submit" class="btn btn-primary">Mua</button>
+							</p>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal QrCode -->
+		<div class="modal fade" th:id="${sanpham.id}">
+			<!--id Model tương ứng với id sản phẩm -->
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h3 th:text="${sanpham.name}"></h3>
+					</div>
+					<div class="modal-body">
+						<img width="400px" th:src="@{${sanpham.qrcode}}" />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Modal -->
+		<!-- Modal Sản Phẩm -->
+		<div class="modal fade" th:id="'hinh'+${sanpham.id}">
+			<!--id Model tương ứng với id sản phẩm -->
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h3 th:text="${sanpham.name}"></h3>
+					</div>
+					<div class="modal-body">
+						<img width="500px" th:src="@{${sanpham.hinh}}" />
+						<h4 th:text="${sanpham.mota}"></h4>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Modal -->
+	</div>
+	<nav th:replace="layout2 :: footer"></nav>
+</body>
+</html>
+
+
+
+
+

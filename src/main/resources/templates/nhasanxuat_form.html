@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<h1>NHà Sản Xuất</h1>
+	<div class="container main-content form">
+		<div class="row">
+			<form action="#" th:action="@{/nhasanxuat/save}"
+				th:object="${nhasanxuat}" method="POST" novalidate="novalidate">
+				<input type="hidden" th:field="*{id}" />
+				<div class="form-group">
+					<label class="control-label col-sm-2 ">Tên:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="*{name}"
+							th:errorclass="field-error" placeholder="Nhập tên nhà sản xuất" /> <em
+							th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></em> <br />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2 ">Địa Chỉ:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="*{diachi}" placeholder="Nhập địa chỉ" /> <br />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2 ">Email:</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" th:field="*{email}" placeholder="Nhập địa chỉ email"/> <br />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2 ">Số Điện Thoại:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="*{sdt}" placeholder="Nhập số điện thại" /> <br />
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary btn-lg">Lưu</button>
+			</form>
+		</div>
+	</div>
+	<!-- /.container -->
+
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

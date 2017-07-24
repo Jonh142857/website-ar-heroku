@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<div class="container main-content list">
+		<div th:if="${success}"
+			class="row alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span th:text="${success}"></span>
+		</div>
+
+		<th:block th:if="${#lists.isEmpty(sanphams)}">
+			<h3>Không có sản phẩm nào</h3>
+			<div class="row">
+				<a th:href="@{/sanpham/create}" class="btn btn-primary pull-left">
+					<span class="glyphicon glyphicon-plus"></span> Thêm sản phẩm
+				</a>
+			</div>
+		</th:block>
+
+		<th:block th:unless="${#lists.isEmpty(sanphams)}">
+			<div class="row">
+				<a th:href="@{/sanpham/create}" class="btn btn-primary pull-left">
+					<span class="glyphicon glyphicon-plus"></span> Thêm sản phẩm
+				</a>
+				<form class="form-inline pull-right" action="#"
+					th:action="@{/sanpham/search}" method="GET">
+					<div class="form-group">
+						<input type="text" class="form-control" name="q"
+							placeholder="Nhập tên sản phẩm" />
+					</div>
+					<button type="submit" class="btn btn-primary">Tìm kiếm</button>
+				</form>
+			</div>
+			<ul class="pagination">
+				<li><a th:href="@{/sanpham/ban}">Bàn</a></li>
+				<li><a th:href="@{/sanpham/ghe}">Ghế</a></li>
+				<li><a th:href="@{/sanpham/giuong}">Giường</a></li>
+			</ul>
+			<br />
+			<div class="row">
+				<table class="table table-bordered table-hover black-text">
+					<thead>
+						<tr bgcolor="#CCCCCC">
+							<th>STT</th>
+							<th>Tên</th>
+							<th>Giá</th>
+							<th>Khuyến Mãi</th>
+							<th>Hình</th>
+							<th>QRCode</th>
+							<th>Mô tả</th>
+							<th>Loại sản phẩm</th>
+							<th>Nhà sản xuất</th>
+							<th>Sửa</th>
+							<th>Xóa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="sanpham,iterStat : ${sanphams}">
+							<td th:text="${iterStat.count}"></td>
+							<td th:text="${sanpham.name}"></td>
+							<td th:text="${sanpham.gia}"></td>
+							<div th:switch="${sanpham.km_id}">
+								<div th:each="khuyenmai: ${khuyenmais}">
+									<td th:case="${khuyenmai.id}" th:text="${khuyenmai.name}"></td>
+								</div>
+							</div>
+							<td th:text="${sanpham.hinh}"></td>
+							<td th:text="${sanpham.qrcode}"></td>
+							<td th:text="${sanpham.mota}"></td>
+							<div th:switch="${sanpham.lsp_id}">
+								<div th:each="loaisanpham: ${loaisanphams}">
+									<td th:case="${loaisanpham.id}" th:text="${loaisanpham.name}"></td>
+								</div>
+							</div>
+							<div th:switch="${sanpham.nsx_id}">
+								<div th:each="nhasanxuat: ${nhasanxuats}">
+									<td th:case="${nhasanxuat.id}" th:text="${nhasanxuat.name}"></td>
+								</div>
+							</div>
+							<td><a th:href="@{/sanpham/{id}/edit(id=${sanpham.id})}"><span
+									class="glyphicon glyphicon-pencil"></span></a></td>
+							<td><a th:href="@{/sanpham/{id}/delete(id=${sanpham.id})}"><span
+									class="glyphicon glyphicon-trash"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</th:block>
+	</div>
+	<!-- /.container -->
+
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

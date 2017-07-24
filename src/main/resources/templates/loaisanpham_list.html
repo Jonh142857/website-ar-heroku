@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<div class="container">
+		<div th:if="${success}"
+			class="row alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span th:text="${success}"></span>
+		</div>
+
+		<th:block th:if="${#lists.isEmpty(loaisanphams)}">
+			<h3>Không có loại sản phẩm nào</h3>
+			<div class="row">
+				<a th:href="@{/loaisanpham/create}"
+					class="btn btn-primary pull-left"> <span
+					class="glyphicon glyphicon-plus"></span> Thêm Loại Sản Phẩm
+				</a>
+			</div>
+		</th:block>
+
+		<th:block th:unless="${#lists.isEmpty(loaisanphams)}">
+			<div class="row">
+				<a th:href="@{/loaisanpham/create}"
+					class="btn btn-primary pull-left"> <span
+					class="glyphicon glyphicon-plus"></span> Thêm Loại Sản Phẩm
+				</a>
+				<form class="form-inline pull-right" action="#"
+					th:action="@{/loaisanpham/search}" method="GET">
+					<div class="form-group">
+						<input type="text" class="form-control" name="q"
+							placeholder="Nhập tên Loại Sản Phẩm" />
+					</div>
+					<button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+				</form>
+			</div>
+			<br />
+			<div class="row">
+				<table class="table table-bordered table-hover black-text">
+					<thead>
+						<tr bgcolor="#CCCCCC">
+							<th>STT</th>
+							<th>Tên</th>
+							<th>Sửa</th>
+							<th>Xóa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="loaisanpham,iterStat : ${loaisanphams}">
+							<td th:text="${iterStat.count}"></td>
+							<td th:text="${loaisanpham.name}"></td>
+
+							<td><a
+								th:href="@{/loaisanpham/{id}/edit(id=${loaisanpham.id})}"><span
+									class="glyphicon glyphicon-pencil"></span></a></td>
+							<td><a
+								th:href="@{/loaisanpham/{id}/delete(id=${loaisanpham.id})}"><span
+									class="glyphicon glyphicon-trash"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</th:block>
+	</div>
+	<!-- /.container -->
+
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

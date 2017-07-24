@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout2 :: head">
+</head>
+<body>
+	<nav th:replace="layout2 :: header"></nav>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<h1>Giỏ Hàng</h1>
+	<div>
+		<a class="btn btn-success btn-lg" th:href="@{/giohang/create}">Mua
+			thêm</a> <a class="btn btn-primary btn-lg" th:href="@{/dathang}">Đặt
+			Hàng</a>
+	</div> 
+	<br/>
+	<div class="col-md-3" th:each="giohang: ${giohangs}">
+		<div class="thumbnail">
+			<div th:switch="${giohang.idsanpham}">
+				<div th:each="sanpham: ${sanphams}">
+					<div th:case="${sanpham.id}">
+						<img width="300px" th:src="@{${sanpham.hinh}}" />
+					</div>
+				</div>
+			</div>
+			<a class="btn btn-danger"
+				th:href="@{/giohang/{id}/delete(id=${giohang.id})}">Xóa</a>
+		</div>
+	</div>
+	<footer th:replace="layout2 :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="simplelayout :: head">
+</head>
+<body>
+	<nav th:replace="simplelayout :: header"></nav>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<h1>Truy Cập Vào Trang</h1>
+	<a class="btn btn-primary btn-lg" th:href="@{/giohang/create}">Người Dùng</a>
+	<a class="btn btn-primary btn-lg" th:href="@{/donhang}">Quản lý</a>
+
+	<footer th:replace="simplelayout :: footer"></footer>
+</body>
+</html>
+
+
